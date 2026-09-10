@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusKits.dev | Enterprise UI Infrastructure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Load Google Identity Services SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="code-bracket">&lt;</span>NexusKits<span class="code-bracket">/&gt;</span>
+        </div>
+        <div class="nav-left">
+            <a href="#components" class="nav-link">Components</a>
+            <a href="#documentation" class="nav-link">Documentation</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+        </div>
+        <div class="nav-right">
+            <button id="auth-btn" class="btn-outline">Authenticate</button>
+            <button id="dashboard-btn" class="btn-primary" style="display: none;">Console</button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="/assets/hero-bg.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="glow-orb"></div>
+        <div class="hero-content fade-in">
+            <div class="badge">v2.4.0 is now live</div>
+            <h2>Ship enterprise UIs at <span class="text-gradient">warp speed.</span></h2>
+            <p>Production-ready, accessible, and highly customizable React components for modern engineering teams.</p>
+            <div class="terminal-box">
+                <span class="prompt">$</span> npm install @nexuskits/core
+                <button class="copy-btn">Copy</button>
+            </div>
+        </div>
+    </header>
+
+    <section id="components" class="catalog-section scroll-reveal">
+        <div class="section-header">
+            <h3>Explore the Ecosystem</h3>
+            <p class="subtitle">Everything you need to build scalable dashboards.</p>
+        </div>
+        <div class="product-grid" id="product-grid"></div>
+    </section>
+
+    <section id="documentation" class="docs-section scroll-reveal">
+        <div class="section-header center">
+            <h3>Developer-First Documentation</h3>
+            <p class="subtitle">Type-safe, thoroughly documented, and easy to integrate.</p>
+        </div>
+        <div class="docs-container">
+            <div class="docs-sidebar">
+                <ul>
+                    <li class="active">Quick Start</li>
+                    <li>Authentication</li>
+                    <li>DataGrid API</li>
+                    <li>Theming Engine</li>
+                    <li>Webhooks</li>
+                </ul>
+            </div>
+            <div class="docs-content">
+                <div class="mac-window">
+                    <div class="mac-header">
+                        <div class="mac-buttons"><span></span><span></span><span></span></div>
+                        <div class="mac-title">auth-setup.ts</div>
+                    </div>
+                    <pre><code><span class="keyword">import</span> { NexusProvider, useAuth } <span class="keyword">from</span> <span class="string">'@nexuskits/core'</span>;
+
+<span class="keyword">export function</span> <span class="function">App</span>() {
+  <span class="keyword">return</span> (
+    <span class="tag">&lt;NexusProvider</span> <span class="attr">apiKey</span>=<span class="string">"pk_live_..."</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;Dashboard /&gt;</span>
+    <span class="tag">&lt;/NexusProvider&gt;</span>
+  );
+}
+
+<span class="comment">// Vulnerability Note: Always verify roles on the server!</span>
+<span class="keyword">const</span> { user } = <span class="function">useAuth</span>();
+<span class="keyword">if</span> (user.role === <span class="string">'admin'</span>) {
+  <span class="function">loadAdminPortal</span>();
+}</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing-section scroll-reveal">
+        <div class="section-header center">
+            <h3>Transparent Pricing</h3>
+            <p class="subtitle">Scale your infrastructure without scaling your costs.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h4>Hobby</h4>
+                <div class="price">$0<span>/mo</span></div>
+                <p>Perfect for side projects and testing.</p>
+                <ul><li>10,000 API Requests</li><li>Basic Components</li><li>Community Support</li></ul>
+                <button class="btn-outline w-100">Get Started</button>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">Most Popular</div>
+                <h4>Pro</h4>
+                <div class="price">$49<span>/mo</span></div>
+                <p>For professional developers and small teams.</p>
+                <ul><li>Unlimited API Requests</li><li>Advanced DataGrid & Charts</li><li>Priority Email Support</li><li>Role-Based Access Control</li></ul>
+                <button class="btn-primary w-100">Upgrade to Pro</button>
+            </div>
+            <div class="pricing-card">
+                <h4>Enterprise</h4>
+                <div class="price">Custom</div>
+                <p>For large scale organizations.</p>
+                <ul><li>Dedicated Infrastructure</li><li>Custom Component Design</li><li>24/7 Phone Support</li><li>SSO / SAML Integration</li></ul>
+                <button class="btn-outline w-100">Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="login-modal">
+        <div class="login-box">
+            <button id="close-login" class="btn-close">&times;</button>
+            <h2>Developer Login</h2>
+            <p>Authenticate to access your API keys and secure documentation.</p>
+            
+            <!-- This div is where the Google API will inject the real button -->
+            <div id="google-btn-container" style="display: flex; justify-content: center; margin-top: 1.5rem;"></div>
+            
+            <div class="terminal-output" id="login-status"></div>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
